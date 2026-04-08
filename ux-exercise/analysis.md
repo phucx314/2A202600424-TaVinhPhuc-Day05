@@ -1,84 +1,38 @@
-# Bài tập UX: phân tích sản phẩm AI thật
+# UX exercise — Vietnam Airlines Chatbot NEO
 
-**Thời gian:** 40 phút | **Cá nhân** | **Output:** sketch giấy, nộp cuối bài
+## Sản phẩm: Vietnam Airlines — Chatbot NEO (hỗ trợ khách hàng)
 
----
+## 4 paths
 
-## Chọn 1 sản phẩm
+### 1. AI đúng
+- User hỏi đúng keyword (VD: quy định hành lý) → Bot trả lời đầy đủ thông tin trọng lượng vs kích thước + link tham khảo
+- Trải nghiệm tự động xử lý tốt, đầy đủ thông tin
 
-| Sản phẩm | AI feature | Truy cập |
-|----------|-----------|---------|
-| MoMo — Trợ thủ AI Moni | Phân loại chi tiêu, chatbot tài chính | App MoMo |
-| Vietnam Airlines — Chatbot NEO | Chatbot hỗ trợ khách hàng, tra cứu chuyến bay | vietnamairlines.com hoặc Zalo VNA |
-| V-App — Trợ lý ảo V-AI | Trợ lý voice/text, gợi ý theo context | App V-App |
+### 2. AI không chắc
+- User gõ "chec in nhu nao?" (sai typo / ko dấu) → Bot không đoán được intent
+- Bot báo "chưa có thông tin" và đẩy trách nhiệm cho user alo cho tổng đài
+- Vấn đề: Xử lý kém, không có cơ chế hỏi lại user để làm rõ ý
 
----
+### 3. AI sai
+- User nhập sai mã đặt chỗ → Bot chỉ báo không hợp lệ mà không có correction path
+- Khi gặp 2 intent ("đi SG" và "xách nhiều đồ") → Bot bị phân vân và bỏ qua ý mua vé, chỉ tư vấn mua thêm ghế chở 75kg đồ
+- Sửa bằng cách nào: Không rõ ràng, user phải tự gõ lại luồng từ đầu
 
-## Phần 1 — Khám phá (15 phút)
+### 4. User mất niềm tin
+- User trong trạng thái khẩn cấp ("Chuyến bay của hãng delay làm tôi bị lỡ chuyến chuyển tiếp, đền bù gấp!") → Bot không nhận diện được sự tức giận
+- Thay vì đưa exit path như CTA để gọi nhân viên thật → Bot ném đoạn văn pháp lý dài khiến user càng tức hơn
+- Đây là path tệ nhất, không có fallback thân thiện
 
-**Trước khi dùng:** tìm hiểu sản phẩm marketing AI feature này thế nào — website, app store, bài PR. Sản phẩm hứa gì?
+## Path yếu nhất: Path 4
+- Xử lý máy móc, thuần FAQ, mù EQ và không có CTA khẩn cấp
+- Không có lối thoát (exit path) khi user đang trong tình trạng bức xúc
 
-**Rồi dùng thử:** tải app / mở web, thử các tính năng AI. Quan sát kỹ: AI phản ứng thế nào? UI thay đổi gì? Có nút gì xuất hiện / biến mất?
+## Gap marketing vs thực tế
+- Marketing: "Tra cứu nhanh chóng, hỗ trợ tìm giá vé tốt nhất, cung cấp thông tin quan trọng" - hứa hẹn AI liền mạch.
+- Thực tế: Trải nghiệm cực tệ khi NLP không hiểu từ khoá, gây trả lời sai, vòng lặp, fallback về yêu cầu cung cấp thông tin đặt chỗ và mã chuyến bay.
+- Gap lớn nhất: Thực tế không khác gì auto-bot rule-based. Không có UX xử lý graceful failure và gãy luồng chat hoàn toàn ở nhịp khó.
 
-### Kết quả khám phá
-
-**Marketing hứa hẹn:**
-- Tra cứu nhanh chóng
-- Hỗ trợ tìm giá vé tốt nhất
-- Cung cấp thông tin quan trọng
-
-**Trải nghiệm thực tế:**
-- Trải nghiệm cực tệ khi NLP không hiểu từ khoá, gây trả lời sai, vòng lặp, fallback về yêu cầu cung cấp thông tin đặt chỗ và mã chuyến bay. Gần như thuần FAQ chatbot rule-based.
-
-## Phần 2 — Phân tích 4 paths (10 phút)
-
-Dùng framework 4 paths để mổ xẻ sản phẩm:
-
-| Path | Câu hỏi | Đánh giá hiện trạng |
-| :--- | :--- | :--- |
-| **Khi AI đúng** | User thấy gì? | Khi hỏi đúng keyword (VD: quy định hành lý), bot trả lời đầy đủ thông tin trọng lượng vs kích thước + link tham khảo |
-| **Khi AI không chắc** | Hệ thống xử lý thế nào? | Xử lý kém. User gõ "chec in nhu nao?" (sai typo / ko dấu), bot ko đoán được intent mà báo "chưa có thông tin" và đẩy trách nhiệm cho user alo cho tổng đài, ko hỏi lại user. |
-| **Khi AI sai** | Sửa bằng cách nào? | Khi user nhập sai mã đặt chỗ, bot chỉ báo ko hợp lệ mà ko có correction path; khi gặp 2 intent ("đi SG" và "xách nhiều đồ"), bot bị phân vân và bỏ qua ý mua vé và chỉ tư vấn mua thêm ghế chở 75kg đồ. |
-| **Khi user mất tin** | Có exit ko? | Đây là path tệ nhất, khi user đang trong state khẩn cấp ("Chuyến bay của hãng delay làm tôi bị lỡ chuyến chuyển tiếp, đền bù gấp!"), bot ko nhận diện đc sự tức giận. Thay vì đưa exit path như CTA để gọi nhân viên thật thì nó lại ném đoạn văn pháp lý dài khiến user tức lên. |
-
-**Tự phân tích:**
-- **Path xử lý tốt nhất:** Path 1 (Khi đúng luồng kịch bản định sẵn) - Đầy đủ thông tin và link.
-- **Path xử lý yếu nhất:** Path 4 - Xử lý máy móc, thuần FAQ, mù EQ và ko có CTA khẩn cấp.
-- **Gap giữa marketing và thực tế:** Lớn - Hứa hẹn AI liền mạch nhưng trải nghiệm thực tế ko khác gì auto-bot rule-based. Ko có UX xử lý graceful failure và exit path khi đứt gãy luồng chat.
-
-## Phần 3 — Sketch "làm tốt hơn" (10 phút)
-
-Chọn **1 path yếu nhất** mà mình tìm được. Sketch trên giấy:
-
-- **As-is** (bên trái): user journey hiện tại → đánh dấu chỗ gãy
-- **To-be** (bên phải): user journey đề xuất → vẽ kế bên
-- Ghi rõ: thêm gì? Bớt gì? Đổi gì?
-
-Không cần đẹp. Cần rõ.
-
-## Phần 4 — Share + vote (5 phút)
-
-Chia sẻ sketch với nhóm. Mỗi người trình bày ngắn (30 giây). Nhóm vote sketch hay nhất → **bonus điểm**.
-
----
-
-## Nộp bài
-
-Mỗi người nộp sketch giấy + ghi chú phân tích 4 paths. Đây là **điểm cá nhân**.
-
-**Nice to have:** screenshot màn hình app + annotate (khoanh, ghi chú) chỗ hay / chỗ gãy. Nộp kèm sketch.
-
----
-
-## Tiêu chí chấm (10 điểm + bonus)
-
-| Tiêu chí | Điểm |
-|----------|------|
-| Phân tích 4 paths đủ + nhận xét path yếu nhất | 4 |
-| Sketch as-is + to-be rõ ràng | 4 |
-| Nhận xét gap marketing vs thực tế | 2 |
-| **Bonus:** nhóm vote sketch hay nhất | +bonus |
-
----
-
-*Bài tập UX — Ngày 5 — VinUni A20 — AI Thực Chiến · 2026*
+## Sketch
+(Ảnh đính kèm: sketch.jpg hoặc sketch.pdf)
+- As-is: user nhập tình huống khẩn cấp / tức giận → bot trả lời template pháp lý / không hiểu context → user mắc kẹt
+- To-be: user nhập tình huống khẩn cấp / tức giận → bot nhận diện sentiment báo "Xin lỗi quý khách về trải nghiệm này..." → hiện ngay CTA kết nối Agent thực / Hotline / Email kèm việc transfer toàn bộ lịch sử chat
